@@ -1,6 +1,6 @@
 const db = require('../../DB/mysql')
 
-const TABLE = 'clients'
+const TABLE = 'users'
 
 
 module.exports = function(dbinject){

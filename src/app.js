@@ -5,6 +5,7 @@ const config = require('./config')
 const app = express()
 
 const clients = require('./modules/clients/clientsRoutes')
+const users = require('./modules/users/usersRoutes')
 const error = require('./red/error_response')
 
 //Middleware
@@ -18,6 +19,7 @@ app.set('port', config.app.port)
 // routes
 
 app.use('/api/clients', clients)
+app.use('/api/users', users)
 app.use(error)
 
 module.exports = app
