@@ -5,9 +5,12 @@ const config = require('./config')
 const app = express()
 
 const clients = require('./modules/clients/clientsRoutes')
+const error = require('./red/error_response')
 
 //Middleware
 app.use(morgan('dev'))
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 // configurate port
 app.set('port', config.app.port)
@@ -15,5 +18,6 @@ app.set('port', config.app.port)
 // routes
 
 app.use('/api/clients', clients)
+app.use(error)
 
 module.exports = app
