@@ -6,6 +6,7 @@ const app = express()
 
 const clients = require('./modules/clients/clientsRoutes')
 const users = require('./modules/users/usersRoutes')
+const auth = require('./modules/auth/authRouters')
 const error = require('./red/error_response')
 
 //Middleware
@@ -20,6 +21,7 @@ app.set('port', config.app.port)
 
 app.use('/api/clients', clients)
 app.use('/api/users', users)
+app.use('/api/auth', auth)
 app.use(error)
 
 module.exports = app

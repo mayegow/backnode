@@ -49,11 +49,12 @@ function getOnlyOne(table, id){
 }
 
 function updateData(table, data){
-    if(data  && data.id == 0){
-        return insert(table, data)
-    } else {
-        return update(table, data)
-    }
+    console.log(data.id)
+    return new Promise((resolve, reject)=>{
+        connection.query(`INSERT INTO ${table} SET ? ON DUPLICATE KEY UPDATE ?`, [data, data], (error, result)=>{ 
+            return error ? reject(error) : resolve(result)
+        })
+    })
 }
 
 function deleteData(table, data){
@@ -64,24 +65,21 @@ function deleteData(table, data){
     })
 }
 
-function insert(table, data){
+
+function query(table, data){
     return new Promise((resolve, reject)=>{
-        connection.query(`INSERT INTO ${table} SET ?`, data, (error, result)=>{ 
-            return error ? reject(error) : resolve(result)
+        connection.query(`SELECT * FROM ${table} WHERE ? `, data, (error, result)=>{ 
+            return error ? reject(error) : resolve(result[0])
         })
     })
 }
-function update(table, data){
-    return new Promise((resolve, reject)=>{
-        connection.query(`UPDATE ${table} SET ? WHERE id = ?`, [data, data.id], (error, result)=>{ 
-            return error ? reject(error) : resolve(result)
-        })
-    })
-}
+
+
 
 module.exports = {
     get,
     getOnlyOne,
     updateData,
-    deleteData
+    deleteData,
+    query
 }
