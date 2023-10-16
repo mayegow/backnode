@@ -7,19 +7,16 @@ const controler = require('./index')
 
 const router = express.Router()
 
-router.get('/login', login)
-// router.get('/:id', getOnlyOne)
-// router.post('/', updateData)
-// router.put('/', deleteData)
+router.post('/login', login)
 
 async function login(req, res, next){
     try{
-        const token = await controler.login(req.body.user_name, req.body.passsword)
+        const token = await controler.login(req.body.user_name, req.body.password)
         responses.success(req, res, token, 200)
-        
     } catch(err){
         next(err)
     }
+
 }
 
 

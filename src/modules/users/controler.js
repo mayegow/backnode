@@ -1,6 +1,6 @@
 const db = require('../../DB/mysql')
 const TABLE = 'users'
-const auth = require('../auth/authRouters')
+const auth = require('../auth')
 module.exports = function(dbinject){
     let db = dbinject
     if(!db){
@@ -13,9 +13,6 @@ module.exports = function(dbinject){
         return db.getOnlyOne(TABLE, id)
     }
 
-
-
-
     async function updateData(body){
         const user = {
             id: body.id,
@@ -24,11 +21,9 @@ module.exports = function(dbinject){
         }
         var insertId = 0
         const response = await db.updateData(TABLE, user)
-        insertId = body.id
-        if(body.id == 0){
-
-            insertId = response.insertId
         
+        if(body.id == 0){
+            insertId = response.insertId
         } else {
             insertId = body.id
         }

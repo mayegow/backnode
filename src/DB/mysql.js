@@ -49,7 +49,7 @@ function getOnlyOne(table, id){
 }
 
 function updateData(table, data){
-    console.log(data.id)
+    console.log(data.id, "EXECUTION UPDATE OR INSERT=================>")
     return new Promise((resolve, reject)=>{
         connection.query(`INSERT INTO ${table} SET ? ON DUPLICATE KEY UPDATE ?`, [data, data], (error, result)=>{ 
             return error ? reject(error) : resolve(result)
@@ -67,6 +67,7 @@ function deleteData(table, data){
 
 
 function query(table, data){
+    console.log(table, data)
     return new Promise((resolve, reject)=>{
         connection.query(`SELECT * FROM ${table} WHERE ? `, data, (error, result)=>{ 
             return error ? reject(error) : resolve(result[0])
