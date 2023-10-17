@@ -1,5 +1,7 @@
 const express = require('express')
 
+const secureToken = require('./security')
+
 const responses = require('../../red/responses')
 
 const controler = require('./index')
@@ -9,8 +11,9 @@ const router = express.Router()
 
 router.get('/', get)
 router.get('/:id', getOnlyOne)
-router.post('/', updateData)
-router.put('/', deleteData)
+router.post('/', addData)
+router.patch('/', secureToken(), updateData)
+router.put('/', secureToken(), deleteData)
 
 async function get(req, res, next){
     try{
@@ -33,14 +36,22 @@ async function getOnlyOne(req, res, next){
     }
 }
 
+async function addData(req, res, next){
+    try{
+        const items = await controler.addData(req.body)
+        
+        var message = 'Save Item successfully'
+        
+        responses.success(req, res, message, 201)
+    } catch(err){
+        next(err)
+    }
+}
 async function updateData(req, res, next){
     try{
         const items = await controler.updateData(req.body)
-        if (req.body.id == 0){
-           var message = 'Save Item successfully'
-        } else {
-           var message = 'Updated Item Successfully'
-        }
+        var message = 'Updated Item Successfully'
+        
         responses.success(req, res, message, 201)
     } catch(err){
         next(err)

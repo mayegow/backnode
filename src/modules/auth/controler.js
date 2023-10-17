@@ -22,6 +22,20 @@ module.exports = function(dbinject){
         })
     }
 
+    async function addData(data){
+        const authData = {
+            id: data.id
+        }
+
+        if (data.user_name){
+            authData.user_name = data.user_name
+        }
+        if (data.password){
+            authData.password = await bcrypt.hash(data.password, 5)
+        }
+
+        return db.addData(TABLE, authData)
+    }
     async function updateData(data){
         const authData = {
             id: data.id
@@ -39,6 +53,7 @@ module.exports = function(dbinject){
     
     return {
         updateData,
+        addData,
         login
     }
 }

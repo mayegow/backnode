@@ -48,8 +48,16 @@ function getOnlyOne(table, id){
     })
 }
 
+function addData(table, data){
+    console.log(data.id, "EXECUTION INSERT=================>", data)
+    return new Promise((resolve, reject)=>{
+        connection.query(`INSERT INTO ${table} SET ?`, [data], (error, result)=>{ 
+            return error ? reject(error) : resolve(result)
+        })
+    })
+}
 function updateData(table, data){
-    console.log(data.id, "EXECUTION UPDATE OR INSERT=================>")
+    console.log(data.id, "EXECUTION UPDATE=================>")
     return new Promise((resolve, reject)=>{
         connection.query(`INSERT INTO ${table} SET ? ON DUPLICATE KEY UPDATE ?`, [data, data], (error, result)=>{ 
             return error ? reject(error) : resolve(result)
@@ -80,6 +88,7 @@ function query(table, data){
 module.exports = {
     get,
     getOnlyOne,
+    addData,
     updateData,
     deleteData,
     query
