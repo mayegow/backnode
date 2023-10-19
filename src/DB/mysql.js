@@ -65,9 +65,10 @@ function updateData(table, data){
     })
 }
 
-function deleteData(table, data){
+function deleteData(table, id){
+    console.log("ELEMENTO QUE SE ELIMINARÁ", id)
     return new Promise((resolve, reject)=>{
-        connection.query(`DELETE FROM ${table} WHERE id = ? `, data.id, (error, result)=>{ 
+        connection.query(`DELETE FROM ${table} WHERE id = ? `, id, (error, result)=>{ 
             return error ? reject(error) : resolve(result)
         })
     })

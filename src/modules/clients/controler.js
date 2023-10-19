@@ -19,16 +19,21 @@ module.exports = function(dbinject){
         return db.getOnlyOne(TABLE, id)
     }
     
+    function addData(body){
+        return db.addData(TABLE, body)
+    }
+
     function updateData(body){
         return db.updateData(TABLE, body)
     }
     
-    function deleteData(body){
-        return db.deleteData(TABLE, body)
+    function deleteData(id){
+        return db.deleteData(TABLE, id)
     }
     return {
         get,
         getOnlyOne,
+        addData,
         updateData,
         deleteData
     }

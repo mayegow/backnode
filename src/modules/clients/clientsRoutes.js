@@ -9,8 +9,9 @@ const router = express.Router()
 
 router.get('/', get)
 router.get('/:id', getOnlyOne)
-router.post('/', updateData)
-router.put('/', deleteData)
+router.patch('/', updateData)
+router.post('/', addData)
+router.delete('/:id', deleteData)
 
 async function get(req, res, next){
     try{
@@ -33,6 +34,18 @@ async function getOnlyOne(req, res, next){
     }
 }
 
+async function addData(req, res, next){
+    try{
+        const items = await controler.addData(req.body)
+        
+        var message = 'Save Item successfully'
+        
+        responses.success(req, res, message, 201)
+    } catch(err){
+        next(err)
+    }
+}
+
 async function updateData(req, res, next){
     try{
         const items = await controler.updateData(req.body)
@@ -49,7 +62,9 @@ async function updateData(req, res, next){
 
 async function deleteData(req, res, next){
     try{
-        const gets = await controler.deleteData(req.body)
+        const gets = await controler.deleteData(req.params.id)
+        console.log("routes-body: ",req.body)
+        console.log("routes: ",req.body.id)
         responses.success(req, res, "Delete item success", 200)
     } catch(err){
         next(err)
