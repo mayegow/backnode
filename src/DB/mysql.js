@@ -49,7 +49,6 @@ function getOnlyOne(table, id){
 }
 
 function addData(table, data){
-    console.log(data.id, "EXECUTION INSERT=================>", data)
     return new Promise((resolve, reject)=>{
         connection.query(`INSERT INTO ${table} SET ?`, [data], (error, result)=>{ 
             return error ? reject(error) : resolve(result)
@@ -57,16 +56,14 @@ function addData(table, data){
     })
 }
 function updateData(table, data){
-    console.log(data.id, "EXECUTION UPDATE=================>")
     return new Promise((resolve, reject)=>{
-        connection.query(`INSERT INTO ${table} SET ? ON DUPLICATE KEY UPDATE ?`, [data, data], (error, result)=>{ 
+        connection.query(`UPDATE ${table} SET ? WHERE id= ${data.id}`, data, (error, result)=>{ 
             return error ? reject(error) : resolve(result)
         })
     })
 }
 
 function deleteData(table, id){
-    console.log("ELEMENTO QUE SE ELIMINARÁ", id)
     return new Promise((resolve, reject)=>{
         connection.query(`DELETE FROM ${table} WHERE id = ? `, id, (error, result)=>{ 
             return error ? reject(error) : resolve(result)
